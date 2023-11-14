@@ -6,19 +6,34 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
 public class ArticleController {
+
+    private Article lastArticle;
+
     @GetMapping("/article/write")
     String showWrite() {
         return "article/write";
     }
 
+
     @GetMapping("/article/doWrite")
     @ResponseBody
-    Article doWrite(String title, String body) {
-        Article article = new Article(1, title, body);
+    Map<String, Object> doWrite(String title, String body) {
+        Map<String, Object> rs = new HashMap<>();
+        rs.put("msg", "1번 게시물이 작성되었습니다.");
+        lastArticle = new Article(1, title, body);
+        rs.put("data", lastArticle);
+        return rs;
+    }
 
-        return article;
+    @GetMapping("/article/getLastArticle")
+    @ResponseBody
+    Article getLastArticles() {
+        return lastArticle;
     }
 }
 
