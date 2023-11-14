@@ -210,6 +210,14 @@ public class HomeController {
         return "calc21";
     }
 
+    int num = 0;
+    @GetMapping("/calc22")
+    @ResponseBody
+    int showCalc22(){
+        num++;
+        return num;
+    }
+
 
 
 }
