@@ -1,6 +1,7 @@
 package com.ll.sb231114.domain.article.article.controller;
 
 import com.ll.sb231114.domain.article.article.entity.Article;
+import com.ll.sb231114.domain.article.article.service.ArticleService;
 import com.ll.sb231114.global.RsData;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +14,7 @@ import java.util.List;
 @Controller
 public class MissionArticleController {
 
-    private List<Article> articles = new ArrayList<>();
+    private final ArticleService articleService = new ArticleService();
 
     @GetMapping("/article/write")
     String write() {
@@ -22,9 +23,8 @@ public class MissionArticleController {
 
     @PostMapping("/article/write")
     @ResponseBody
-    RsData<Article> doWrite(String title, String body) {
-        Article article = new Article(articles.size()+1, title, body);
-        articles.add(article);
+    RsData<Article> write(String title, String body) {
+        Article article = articleService.write(title, body);
 
         RsData<Article> rs = new RsData(
                 "S-1",
@@ -37,13 +37,13 @@ public class MissionArticleController {
     @GetMapping("/article/getLastArticle")
     @ResponseBody
     Article getLastArticle(){
-        return articles.getLast();
+        return articleService.findLastArticle();
     }
 
     @GetMapping("/article/getArticles")
     @ResponseBody
     List<Article> getArticles(){
-        return articles;
+        return articleService.findAll();
     }
 
 }
