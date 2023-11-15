@@ -12,9 +12,13 @@ import java.util.List;
 
 @Service
 public class ArticleService {
-    @Autowired
-    private  ArticleRepository articleRepository;
 
+    private final ArticleRepository articleRepository;
+
+    @Autowired
+    public ArticleService(ArticleRepository articleRepository) {
+        this.articleRepository = articleRepository;
+    }
     public Article write(String title, String body) {
         Article article = new Article( title, body);
 

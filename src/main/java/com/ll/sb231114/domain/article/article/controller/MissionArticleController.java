@@ -15,8 +15,13 @@ import java.util.List;
 @Controller
 public class MissionArticleController {
 
+
+    private final ArticleService articleService;
+
     @Autowired
-    private ArticleService articleService;
+    public MissionArticleController(ArticleService articleService) {
+        this.articleService = articleService;
+    }
 
     @GetMapping("/article/write")
     String write() {
