@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class MissionArticleController {
         return "article/write";
     }
 
-    @GetMapping("/article/doWrite")
+    @PostMapping("/article/write")
     @ResponseBody
     RsData<Article> doWrite(String title, String body) {
         Article article = new Article(articles.size()+1, title, body);
