@@ -103,6 +103,14 @@ public class MissionArticleController {
 
         return "article/rqTest";
     }
+
+
+    @GetMapping("/article/list")
+    String showList() {
+        List<Article> articles = articleService.findAll();
+
+        return "article/list";
+    }
 }
 
 
