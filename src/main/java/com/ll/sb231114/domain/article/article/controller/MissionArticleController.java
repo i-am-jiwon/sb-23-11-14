@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ll.sb231114.domain.article.article.entity.Article;
 import com.ll.sb231114.domain.article.article.service.ArticleService;
 import com.ll.sb231114.global.RsData;
+import com.ll.sb231114.global.rq.Rq;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class MissionArticleController {
 
     private final ArticleService articleService;
 
+    private final Rq rq;
 
     @GetMapping("/article/write")
     String write() {
@@ -101,7 +103,11 @@ public class MissionArticleController {
         return resp.toString();
     }
 
-
+    @GetMapping("/article/rqPointer")
+    @ResponseBody
+    String rqPointer(){
+        return rq.toString();
+    }
 }
 
 
