@@ -1,6 +1,7 @@
 package com.ll.sb231114.domain.article.article.repository;
 
 import com.ll.sb231114.domain.article.article.entity.Article;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
@@ -9,8 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor
 public class ArticleRepository {
-    private final List<Article> articles = new ArrayList<>();
+    private final List<Article> articles;
 
     public Article save(Article article) {
         if(article.getId() == null){
