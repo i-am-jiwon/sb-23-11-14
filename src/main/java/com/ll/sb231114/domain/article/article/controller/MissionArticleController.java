@@ -6,9 +6,11 @@ import com.ll.sb231114.global.RsData;
 import com.ll.sb231114.global.rq.Rq;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,6 +19,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Validated
 public class MissionArticleController {
 
 
@@ -32,19 +35,9 @@ public class MissionArticleController {
     @PostMapping("/article/write")
     @ResponseBody
     RsData<Article> write(
-            String title,
-            String body
+            @NotBlank String title,
+            @NotBlank String body
     ) {
-        if (title == null || title.trim().length() == 0) {
-            return new RsData<>(
-                    "f-1",
-                    "insert title"
-            );
-        }
-        if (body == null || body.trim().length() == 0) {
-            throw new IllegalArgumentException("title insert");
-        }
-
 
         Article article = articleService.write(title, body);
 
