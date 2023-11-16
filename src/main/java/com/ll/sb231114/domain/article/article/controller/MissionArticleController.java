@@ -6,8 +6,11 @@ import com.ll.sb231114.global.RsData;
 import com.ll.sb231114.global.rq.Rq;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -32,14 +35,20 @@ public class MissionArticleController {
         return "article/write";
     }
 
+    @Getter
+    @Setter
+    public static class WriteForm{
+        @NotBlank
+        private String title;
+        @NotBlank
+        private String body;
+    }
+
     @PostMapping("/article/write")
     @ResponseBody
-    RsData<Article> write(
-            @NotBlank String title,
-            @NotBlank String body
-    ) {
+    RsData<Article> write(@Valid WriteForm writeForm) {
 
-        Article article = articleService.write(title, body);
+        Article article = articleService.write(writeForm.title, writeForm.body);
 
         RsData<Article> rs = new RsData(
                 "S-1",
