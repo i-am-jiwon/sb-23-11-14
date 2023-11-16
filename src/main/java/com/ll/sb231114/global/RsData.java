@@ -2,11 +2,13 @@ package com.ll.sb231114.global;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 public class RsData<T> {
-    private String resultCode;
-    private String msg;
+    private final String resultCode;
+    private final String msg;
     private T data;
 }
