@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -14,10 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,13 +32,25 @@ public class MissionArticleController {
 
     private final Rq rq;
 
+
+    @GetMapping("/article/detail/{id}")
+    @ResponseBody
+    String showDetail(@PathVariable long id) {
+        Optional<Article> opArticle = articleService.findById(id);
+        Article article = opArticle.get();
+
+        return "article/detail";
+    }
+
+
+
+
     @GetMapping("/article/write")
     String write() {
         return "article/write";
     }
 
-    @Getter
-    @Setter
+    @Data
     public static class WriteForm {
         @NotBlank
         private String title;
