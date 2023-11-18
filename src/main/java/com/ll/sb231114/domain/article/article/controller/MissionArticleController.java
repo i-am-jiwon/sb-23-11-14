@@ -2,7 +2,6 @@ package com.ll.sb231114.domain.article.article.controller;
 
 import com.ll.sb231114.domain.article.article.entity.Article;
 import com.ll.sb231114.domain.article.article.service.ArticleService;
-import com.ll.sb231114.global.RsData;
 import com.ll.sb231114.global.rq.Rq;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -37,7 +36,7 @@ public class MissionArticleController {
 
     @Getter
     @Setter
-    public static class WriteForm{
+    public static class WriteForm {
         @NotBlank
         private String title;
         @NotBlank
@@ -45,17 +44,12 @@ public class MissionArticleController {
     }
 
     @PostMapping("/article/write")
-    @ResponseBody
-    RsData<Article> write(@Valid WriteForm writeForm) {
+    String write(@Valid WriteForm writeForm) {
 
         Article article = articleService.write(writeForm.title, writeForm.body);
 
-        RsData<Article> rs = new RsData(
-                "S-1",
-                "%d번 게시물 작성".formatted(article.getId()),
-                article
-        );
-        return rs;
+        String msg = "%d".formatted(article.getId());
+        return "redirect:/article/list?msg=" + msg;
     }
 
 
