@@ -44,6 +44,14 @@ public class MissionArticleController {
 
 
 
+    @GetMapping("/article/delete/{id}")
+    String write(@PathVariable long id) {
+        articleService.delete(id);
+
+        String msg = "%d deleted".formatted(id);
+        return "redirect:/article/list?msg=" + msg;
+    }
+
 
     @GetMapping("/article/write")
     String write() {
