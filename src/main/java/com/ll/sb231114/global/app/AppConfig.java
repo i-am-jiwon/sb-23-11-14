@@ -9,8 +9,5 @@ import java.util.List;
 
 @Configuration
 public class AppConfig {
-    @Bean
-    List<Article> articles(){
-        return new LinkedList<>();
-    }
+
 }

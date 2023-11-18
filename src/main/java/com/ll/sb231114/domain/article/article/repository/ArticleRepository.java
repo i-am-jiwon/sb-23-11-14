@@ -12,7 +12,11 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class ArticleRepository {
-    private final List<Article> articles;
+    private final List<Article> articles = new ArrayList<>(){{
+        add(new Article(1L, "1", "1"));
+        add(new Article(2L, "2", "2"));
+        add(new Article(3L, "3", "3"));
+    }};
 
     public Article save(Article article) {
         if(article.getId() == null){
