@@ -7,7 +7,7 @@
   <li><a href="/article/list">글 목록</a></li>
 </ul>
 
-<form method="post" action="/article/write" onsubmit="submitModifyForm(this);"
+<form method="post" onsubmit="submitModifyForm(this);"
       style = "display: flex; flex-direction: column; gap: 20px; max-width: 500px;">
   <input type="text" name = "title" id="input-title"placeholder="제목" th:value="${article.title}">
 

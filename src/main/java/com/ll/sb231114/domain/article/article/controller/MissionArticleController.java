@@ -8,9 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -43,7 +40,6 @@ public class MissionArticleController {
     }
 
 
-
     @GetMapping("/article/delete/{id}")
     String write(@PathVariable long id) {
         articleService.delete(id);
@@ -60,6 +56,23 @@ public class MissionArticleController {
         model.addAttribute("article", article);
 
         return "article/modify";
+    }
+
+    @Data
+    public static class ModifyForm {
+        @NotBlank
+        private String title;
+        @NotBlank
+        private String body;
+    }
+
+    @PostMapping("/article/modify/{id}")
+    String modify(@PathVariable long id, @Valid ModifyForm ModifyForm) {
+
+        articleService.modify(id, ModifyForm.title, ModifyForm.body);
+
+        String msg = "%d modify".formatted(id);
+        return "redirect:/article/list?msg=" + msg;
     }
 
     @GetMapping("/article/write")
