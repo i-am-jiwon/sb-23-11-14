@@ -2,6 +2,7 @@ package com.ll.sb231114.domain.article.article.controller;
 
 import com.ll.sb231114.domain.article.article.entity.Article;
 import com.ll.sb231114.domain.article.article.service.ArticleService;
+import com.ll.sb231114.global.rq.Rq;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class MissionArticleController {
 
 
     private final ArticleService articleService;
+    private final Rq rq;
 
 
     @GetMapping("/article/detail/{id}")
@@ -96,11 +98,8 @@ public class MissionArticleController {
 
         Article article = articleService.write(writeForm.title, writeForm.body);
 
-        String msg = "%d번 게시물 생성되었습니다.".formatted(article.getId());
+        return rq.redirect("/article/list" , "%d번 게시물 생성되었습니다.".formatted(article.getId()));
 
-        msg = URLEncoder.encode(msg, StandardCharsets.UTF_8);
-
-        return "redirect:/article/list?msg=" + msg;
     }
 
     @GetMapping("/article/list")
