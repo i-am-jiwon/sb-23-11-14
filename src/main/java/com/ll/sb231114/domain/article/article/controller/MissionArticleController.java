@@ -53,6 +53,11 @@ public class MissionArticleController {
     }
 
 
+    @GetMapping("/article/modify/{id}")
+    String modify(Model model, @PathVariable long id) {
+        return "article/modify";
+    }
+
     @GetMapping("/article/write")
     String write() {
         return "article/write";
