@@ -9,9 +9,9 @@
 
 <form method="post" action="/article/write" onsubmit="submitModifyForm(this);"
       style = "display: flex; flex-direction: column; gap: 20px; max-width: 500px;">
-  <input type="text" name = "title" id="input-title"placeholder="제목">
+  <input type="text" name = "title" id="input-title"placeholder="제목" th:value="${article.title}">
 
-  <input type="text" name = "body" id="input-body" placeholder="내용">
+  <input type="text" name = "body" id="input-body" placeholder="내용" th:value="${article.body}">
 
   <button type="submit">
     글수정
