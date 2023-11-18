@@ -42,11 +42,9 @@ public class MissionArticleController {
     String write(@PathVariable long id) {
         articleService.delete(id);
 
-        String msg = "%d번 게시물이 삭제되었습니다.".formatted(id);
+        return rq.redirect("/article/list" , "%d번 게시물이 삭제되었습니다.".formatted(id));
 
-        msg = URLEncoder.encode(msg, StandardCharsets.UTF_8);
 
-        return "redirect:/article/list?msg=" + msg;
     }
 
 
@@ -72,12 +70,10 @@ public class MissionArticleController {
 
         articleService.modify(id, ModifyForm.title, ModifyForm.body);
 
-        String msg = "%d번 게시물이 수정되었습니다.".formatted(id);
 
 
-        msg = URLEncoder.encode(msg, StandardCharsets.UTF_8);
+        return rq.redirect("/article/list" , "%d번 게시물이 수정되었습니다.".formatted(id));
 
-        return "redirect:/article/list?msg=" + msg;
     }
 
     @GetMapping("/article/write")
