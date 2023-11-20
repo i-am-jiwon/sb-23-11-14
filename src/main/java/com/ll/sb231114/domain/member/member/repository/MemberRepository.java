@@ -1,0 +1,47 @@
+package com.ll.sb231114.domain.member.member.repository;
+
+import com.ll.sb231114.domain.member.member.entity.Member;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+@RequiredArgsConstructor
+public class MemberRepository {
+    private final List<Member> members = new ArrayList<>(){{
+        add(new Member(1L, "user 1", "pass 1"));
+        add(new Member(2L, "user 2", "pass 2"));
+        add(new Member(3L, "user 3", "pass 3"));
+
+    }};
+
+    public Member save(Member member) {
+        if(member.getId() == null){
+            member.setId(members.size() + 1L);
+        }
+        members.add(member);
+
+        return member;
+    }
+
+    public Member findLastMember() {
+        return members.getLast();
+    }
+
+    public List<Member> findAll() {
+        return members;
+    }
+
+    public Optional<Member> findById(long id) {
+        return members.stream()
+                .filter(member -> member.getId() == id)
+                .findFirst();
+    }
+
+    public void delete(long id) {
+        members.removeIf(member -> member.getId() == id);
+    }
+}
