@@ -1,53 +1,54 @@
-<h1>
-    글작성
-</h1>
-
-<ul style="display: flex; gap:20px;">
-    <li><a href="/article/write">글 쓰기</a></li>
-    <li><a href="/article/list">글 목록</a></li>
-</ul>
-
-<form method="post" action="/article/write" onsubmit="submitWriteForm(this);"
-      style = "display: flex; flex-direction: column; gap: 20px; max-width: 500px;">
-    <input type="text" name = "title" id="input-title"placeholder="제목">
-
-    <input type="text" name = "body" id="input-body" placeholder="내용">
-
-    <button type="submit">
-        글쓰기
-    </button>
+<html layout:decorate="~{global/layout}">
+<div layout:fragment="content">
 
 
-</form>
-
-<script>
-
-    function submitWriteForm(form){
-
-        const inputTitle = form.title;
-        const inputBody = form.body;
-
-        inputTitle.value = inputTitle.value.trim();
-        inputBody.value = inputBody.value.trim();
+    <h1>
+        글작성
+    </h1>
 
 
-        const title = inputTitle.value;
-        const body = inputBody.value;
+    <form method="post" action="/article/write" onsubmit="submitWriteForm(this);"
+          style="display: flex; flex-direction: column; gap: 20px; max-width: 500px;">
+        <input type="text" name="title" id="input-title" placeholder="제목">
 
-        // if (title.length == 0){
-        //     alert('제목을 입력해주세요.');
-        //     inputTitle.focus();
-        //     return;
-        // }
-        //
-        // if (body.length == 0){
-        //     alert('제목을 입력해주세요.');
-        //     inputBody.focus();
-        //     return;
-        // }
+        <input type="text" name="body" id="input-body" placeholder="내용">
+
+        <button type="submit">
+            글쓰기
+        </button>
 
 
-        form.submit();
-    }
+    </form>
 
-</script>
+    <script>
+
+        function submitWriteForm(form) {
+
+            const inputTitle = form.title;
+            const inputBody = form.body;
+
+            inputTitle.value = inputTitle.value.trim();
+            inputBody.value = inputBody.value.trim();
+
+
+            const title = inputTitle.value;
+            const body = inputBody.value;
+
+            // if (title.length == 0){
+            //     alert('제목을 입력해주세요.');
+            //     inputTitle.focus();
+            //     return;
+            // }
+            //
+            // if (body.length == 0){
+            //     alert('제목을 입력해주세요.');
+            //     inputBody.focus();
+            //     return;
+            // }
+
+
+            form.submit();
+        }
+
+    </script>
+</div>
