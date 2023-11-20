@@ -1,23 +1,24 @@
-<h1>
-    글 상세 페이지
-</h1>
+<html layout:decorate="~{global/layout}">
+<div layout:fragment="content">
 
-<ul style="display: flex; gap:20px;">
-    <li><a href="/article/write">글 쓰기</a></li>
-    <li><a href="/article/list">글 목록</a></li>
-</ul>
-
-<hr>
-
-<h4>번호 : <span th:text="${article.id}"></span></h4>
-<h4>제목 : <span th:text="${article.title}"></span></h4>
-<h4>내용</h4>
-<div th:text="${article.body}"></div>
+    <h1>
+        글 상세 페이지
+    </h1>
 
 
-<hr>
+    <hr>
 
-<ul style="display: flex; gap:20px;">
-    <li><a th:href="|/article/modify/${article.id}|">글 수정</a></li>
-    <li><a onclick="return confirm('정말로??');" th:href="|/article/delete/${article.id}|">글 삭제</a></li>
-</ul>
+    <h4>번호 : <span th:text="${article.id}"></span></h4>
+    <h4>제목 : <span th:text="${article.title}"></span></h4>
+    <h4>내용</h4>
+    <div th:text="${article.body}"></div>
+
+
+    <hr>
+
+    <ul style="display: flex; gap:20px;">
+        <li><a th:href="|/article/modify/${article.id}|">글 수정</a></li>
+        <li><a onclick="return confirm('정말로??');" th:href="|/article/delete/${article.id}|">글 삭제</a></li>
+    </ul>
+</div>
+</html>
