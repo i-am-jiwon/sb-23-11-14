@@ -3,18 +3,16 @@ package com.ll.sb231114.domain.member.member.controller;
 import com.ll.sb231114.domain.member.member.entity.Member;
 import com.ll.sb231114.domain.member.member.service.MemberService;
 import com.ll.sb231114.global.rq.Rq;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,17 +24,33 @@ public class MemberController {
     private final Rq rq;
 
 
+    @GetMapping("/member/login")
+    String showLogin() {
+        return "member/login";
+    }
+
     @Data
-    public static class ModifyForm {
+    public static class LoginForm {
         @NotBlank
         private String username;
         @NotBlank
         private String password;
     }
 
-    @GetMapping("/member/login")
-    String showLogin() {
-        return "member/login";
+    @PostMapping("/member/login")
+    String login(@Valid LoginForm loginForm, HttpServletResponse response) {
+
+        Member member = memberService.findByUsername(loginForm.username).get();
+
+        if (!member.getPassword().equals(loginForm.password)) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+
+        Cookie cookie = new Cookie("loginedMemberId", member.getId() +"");
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        return rq.redirect("/article/list", "로그인 완료");
+
     }
 
 
@@ -46,7 +60,7 @@ public class MemberController {
     }
 
     @Data
-    public static class WriteForm {
+    public static class JoinForm {
         @NotBlank
         private String username;
         @NotBlank
@@ -54,11 +68,11 @@ public class MemberController {
     }
 
     @PostMapping("/member/join")
-    String join(@Valid WriteForm joinForm) {
+    String join(@Valid JoinForm joinForm) {
 
-        Member member = memberService.join(joinForm.username, joinForm.password);
+        memberService.join(joinForm.username, joinForm.password);
 
-        return rq.redirect("/member/login" , "가입완료");
+        return rq.redirect("/member/login", "가입완료");
 
     }
 
