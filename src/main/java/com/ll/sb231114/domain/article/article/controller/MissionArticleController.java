@@ -5,6 +5,8 @@ import com.ll.sb231114.domain.article.article.service.ArticleService;
 import com.ll.sb231114.domain.member.member.entity.Member;
 import com.ll.sb231114.domain.member.member.service.MemberService;
 import com.ll.sb231114.global.rq.Rq;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -16,9 +18,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.OptionalLong;
 
 @Controller
 @RequiredArgsConstructor
@@ -45,7 +48,7 @@ public class MissionArticleController {
     String write(@PathVariable long id) {
         articleService.delete(id);
 
-        return rq.redirect("/article/list" , "%d번 게시물이 삭제되었습니다.".formatted(id));
+        return rq.redirect("/article/list", "%d번 게시물이 삭제되었습니다.".formatted(id));
 
 
     }
@@ -74,8 +77,7 @@ public class MissionArticleController {
         articleService.modify(id, ModifyForm.title, ModifyForm.body);
 
 
-
-        return rq.redirect("/article/list" , "%d번 게시물이 수정되었습니다.".formatted(id));
+        return rq.redirect("/article/list", "%d번 게시물이 수정되었습니다.".formatted(id));
 
     }
 
@@ -97,12 +99,26 @@ public class MissionArticleController {
 
         Article article = articleService.write(writeForm.title, writeForm.body);
 
-        return rq.redirect("/article/list" , "%d번 게시물 생성되었습니다.".formatted(article.getId()));
+        return rq.redirect("/article/list", "%d번 게시물 생성되었습니다.".formatted(article.getId()));
 
     }
 
     @GetMapping("/article/list")
-    String showList(Model model) {
+    String showList(Model model, HttpServletRequest req) {
+        long loginedMemberId = Optional.ofNullable(req.getCookies())
+                .stream()
+                .flatMap(Arrays::stream)
+                .filter(cookie -> cookie.getName().equals("loginedMemberId"))
+                .map(Cookie::getValue)
+                .mapToLong(Long::parseLong)
+                .findFirst()
+                .orElse(0);
+
+        if (loginedMemberId > 0) {
+            Member loginedMember = memberService.findById(loginedMemberId).get();
+            model.addAttribute("loginedMember", loginedMember);
+        }
+
         Member loginedMember = memberService.findById(1L).get();
         List<Article> articles = articleService.findAll();
 
