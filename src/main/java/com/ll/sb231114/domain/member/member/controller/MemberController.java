@@ -34,6 +34,10 @@ public class MemberController {
         private String password;
     }
 
+    @GetMapping("/member/login")
+    String showLogin() {
+        return "member/login";
+    }
 
 
     @GetMapping("/member/join")
