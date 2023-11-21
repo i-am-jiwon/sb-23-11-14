@@ -52,4 +52,8 @@ public class Rq {
     public boolean isLogined() {
         return getMemberId() > 0;
     }
+
+    public void setSessionAttr(String name, long value) {
+        req.getSession().setAttribute(name, value);
+    }
 }

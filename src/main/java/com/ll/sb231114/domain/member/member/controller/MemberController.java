@@ -3,10 +3,8 @@ package com.ll.sb231114.domain.member.member.controller;
 import com.ll.sb231114.domain.member.member.entity.Member;
 import com.ll.sb231114.domain.member.member.service.MemberService;
 import com.ll.sb231114.global.rq.Rq;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -48,9 +46,7 @@ public class MemberController {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
-
-        HttpSession session = request.getSession();
-        session.setAttribute("loginedMemberId", member.getId());
+        rq.setSessionAttr("loginedMemberId", member.getId());
 
         return rq.redirect("/article/list", "로그인 완료");
 
