@@ -48,9 +48,6 @@ public class MemberController {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
-        Cookie cookie = new Cookie("loginedMemberId", member.getId() +"");
-        cookie.setPath("/");
-        response.addCookie(cookie);
 
         HttpSession session = request.getSession();
         session.setAttribute("loginedMemberId", member.getId());

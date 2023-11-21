@@ -9,6 +9,10 @@
         <span th:text="${loginedMember.username}"></span>님 환영합니다.
     </div>
 
+    <div th:if="${fromSessionLoginedMember}!=null">
+        <span th:text="${fromSessionLoginedMember.username}"></span>님 환영합니다.(ss)
+    </div>
+
     <ul th:if="${articles.size} > 0">
         <li th:each="article : ${articles.reversed}">
             <a class="link" th:href="|/article/detail/ ${article.id}|" th:text="|${article.id}번 : ${article.title}|"></a>

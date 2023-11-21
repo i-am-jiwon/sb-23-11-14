@@ -105,18 +105,17 @@ public class MissionArticleController {
 
     @GetMapping("/article/list")
     String showList(Model model, HttpServletRequest req) {
-        long loginedMemberId = Optional.ofNullable(req.getCookies())
-                .stream()
-                .flatMap(Arrays::stream)
-                .filter(cookie -> cookie.getName().equals("loginedMemberId"))
-                .map(Cookie::getValue)
-                .mapToLong(Long::parseLong)
-                .findFirst()
-                .orElse(0);
 
-        if (loginedMemberId > 0) {
-            Member loginedMember = memberService.findById(loginedMemberId).get();
-            model.addAttribute("loginedMember", loginedMember);
+        long fromSessionLoginedMemberId = Optional
+                .ofNullable(req.getSession().getAttribute("loginedMemberId"))
+                .map(id -> (long) id)
+                .orElse(0L);
+
+
+
+        if (fromSessionLoginedMemberId > 0) {
+            Member loginedMember = memberService.findById(fromSessionLoginedMemberId).get();
+            model.addAttribute("fromSessionLoginedMember", loginedMember);
         }
 
         Member loginedMember = memberService.findById(1L).get();
