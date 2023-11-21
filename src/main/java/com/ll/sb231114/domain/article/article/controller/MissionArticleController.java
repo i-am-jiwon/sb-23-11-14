@@ -100,7 +100,19 @@ public class MissionArticleController {
     }
 
     @GetMapping("/article/write")
-    String write() {
+    String write(HttpServletRequest req, Model model) {
+        long loginedMemberId = Optional
+                .ofNullable(req.getSession().getAttribute("loginedMemberId"))
+                .map(id -> (long) id)
+                .orElse(0L);
+
+
+
+        if (loginedMemberId > 0) {
+            Member loginedMember = memberService.findById(loginedMemberId).get();
+            model.addAttribute("loginedMemberId", loginedMember);
+        }
+
         return "article/write";
     }
 
