@@ -36,20 +36,7 @@ public class MissionArticleController {
 
 
     @GetMapping("/article/detail/{id}")
-    String showDetail(Model model, @PathVariable long id, HttpServletRequest req) {
-
-
-        long loginedMemberId = Optional
-                .ofNullable(req.getSession().getAttribute("loginedMemberId"))
-                .map(_id -> (long) _id)
-                .orElse(0L);
-
-
-
-        if (loginedMemberId > 0) {
-            Member loginedMember = memberService.findById(loginedMemberId).get();
-            model.addAttribute("loginedMemberId", loginedMember);
-        }
+    String showDetail(Model model, @PathVariable long id) {
 
         Article article = articleService.findById(id).get();
 
@@ -101,15 +88,6 @@ public class MissionArticleController {
 
     @GetMapping("/article/write")
     String write() {
-        HttpServletRequest req = rq.getReq();
-
-        long loginedMemberId = rq.getLoginedMemberId();
-
-
-        if (loginedMemberId > 0) {
-            Member loginedMember = rq.getLoginedMember();
-            req.setAttribute("loginedMemberId", loginedMember);
-        }
 
         return "article/write";
     }
@@ -132,19 +110,7 @@ public class MissionArticleController {
     }
 
     @GetMapping("/article/list")
-    String showList(Model model, HttpServletRequest req) {
-
-        long loginedMemberId = Optional
-                .ofNullable(req.getSession().getAttribute("loginedMemberId"))
-                .map(id -> (long) id)
-                .orElse(0L);
-
-
-
-        if (loginedMemberId > 0) {
-            Member loginedMember = memberService.findById(loginedMemberId).get();
-            model.addAttribute("loginedMemberId", loginedMember);
-        }
+    String showList(Model model) {
 
         Member loginedMember = memberService.findById(1L).get();
         List<Article> articles = articleService.findAll();
