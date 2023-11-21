@@ -2,6 +2,7 @@ package com.ll.sb231114.domain.article.article.service;
 
 import com.ll.sb231114.domain.article.article.entity.Article;
 import com.ll.sb231114.domain.article.article.repository.ArticleRepository;
+import com.ll.sb231114.domain.member.member.entity.Member;
 import com.ll.sb231114.global.rq.Rq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,8 @@ public class ArticleService {
 
 
 
-    public Article write(String title, String body) {
-        Article article = new Article( title, body);
+    public Article write(Member author, String title, String body) {
+        Article article = new Article(author, title, body);
 
         articleRepository.save(article);
 

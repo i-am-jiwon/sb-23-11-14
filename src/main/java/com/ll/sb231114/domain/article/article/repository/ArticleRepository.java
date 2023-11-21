@@ -13,11 +13,7 @@ import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
 public class ArticleRepository {
-    private final List<Article> articles = new ArrayList<>(){{
-        add(new Article(1L, "1", "1"));
-        add(new Article(2L, "2", "2"));
-        add(new Article(3L, "3", "3"));
-    }};
+    private final List<Article> articles = new ArrayList<>(){};
 
     public Article save(Article article) {
         if(article.getId() == null){

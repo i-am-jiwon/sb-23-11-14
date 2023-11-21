@@ -116,7 +116,7 @@ public class MissionArticleController {
 
 
         Member loginedMember = rq.getMember();
-        Article article = articleService.write(writeForm.title, writeForm.body);
+        Article article = articleService.write(rq.getMember(), writeForm.title, writeForm.body);
 
         return rq.redirect("/article/list", "%d번 게시물 생성되었습니다.".formatted(article.getId()));
 
