@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.nio.file.AccessDeniedException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -48,7 +50,7 @@ public class MissionArticleController {
 
     @GetMapping("/article/delete/{id}")
     String write(@PathVariable long id) {
-
+        if(!rq.isLogined()) throw new RuntimeException("로그인해주세요");
 
 
         articleService.delete(id);
@@ -61,6 +63,9 @@ public class MissionArticleController {
 
     @GetMapping("/article/modify/{id}")
     String modify(Model model, @PathVariable long id) {
+
+        if(!rq.isLogined()) throw new RuntimeException("로그인해주세요");
+
         Article article = articleService.findById(id).get();
 
         model.addAttribute("article", article);
@@ -79,6 +84,9 @@ public class MissionArticleController {
     @PostMapping("/article/modify/{id}")
     String modify(@PathVariable long id, @Valid ModifyForm ModifyForm) {
 
+        if(!rq.isLogined()) throw new RuntimeException("로그인해주세요");
+
+
         articleService.modify(id, ModifyForm.title, ModifyForm.body);
 
 
@@ -88,6 +96,7 @@ public class MissionArticleController {
 
     @GetMapping("/article/write")
     String write() {
+        if(!rq.isLogined()) throw new RuntimeException("로그인해주세요");
 
         return "article/write";
     }
@@ -101,8 +110,12 @@ public class MissionArticleController {
     }
 
     @PostMapping("/article/write")
+    @SneakyThrows
     String write(@Valid WriteForm writeForm) {
+        if(!rq.isLogined()) throw new RuntimeException("로그인해주세요");
 
+
+        Member loginedMember = rq.getMember();
         Article article = articleService.write(writeForm.title, writeForm.body);
 
         return rq.redirect("/article/list", "%d번 게시물 생성되었습니다.".formatted(article.getId()));

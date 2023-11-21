@@ -38,7 +38,7 @@ public class MemberController {
     }
 
     @PostMapping("/member/login")
-    String login(@Valid LoginForm loginForm, HttpServletRequest request, HttpServletResponse response) {
+    String login(@Valid LoginForm loginForm) {
 
         Member member = memberService.findByUsername(loginForm.username).get();
 
@@ -49,6 +49,14 @@ public class MemberController {
         rq.setSessionAttr("loginedMemberId", member.getId());
 
         return rq.redirect("/article/list", "로그인 완료");
+
+    }
+
+    @GetMapping("/member/logout")
+    String logout() {
+        rq.removeSessionAttr("loginedMemberId");
+
+        return rq.redirect("/article/list", "로그아웃");
 
     }
 
