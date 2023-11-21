@@ -2,6 +2,7 @@ package com.ll.sb231114.global.rq;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
@@ -12,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 @RequestScope
 @Component
 @RequiredArgsConstructor
+@Getter
 public class Rq {
 
     private final HttpServletRequest req;

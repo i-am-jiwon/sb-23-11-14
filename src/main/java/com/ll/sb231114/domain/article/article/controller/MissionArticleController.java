@@ -100,7 +100,8 @@ public class MissionArticleController {
     }
 
     @GetMapping("/article/write")
-    String write(HttpServletRequest req) {
+    String write() {
+        HttpServletRequest req = rq.getReq();
         long loginedMemberId = Optional
                 .ofNullable(req.getSession().getAttribute("loginedMemberId"))
                 .map(id -> (long) id)
