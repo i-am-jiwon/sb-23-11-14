@@ -107,7 +107,7 @@ public class MissionArticleController {
 
 
         if (loginedMemberId > 0) {
-            Member loginedMember = memberService.findById(loginedMemberId).get();
+            Member loginedMember = rq.getLoginedMember();
             req.setAttribute("loginedMemberId", loginedMember);
         }
 
