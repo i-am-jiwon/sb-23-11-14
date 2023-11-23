@@ -31,5 +31,6 @@ public class Member {
             return List.of("ROLE_ADMIN");
         }
         return List.of("ROLE_MEMBER");
+
     }
 }

@@ -11,17 +11,16 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class NeedToAdminInterceptor implements HandlerInterceptor {
+public class NeedToLoginInterceptor implements HandlerInterceptor {
 
     private final Rq rq;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-
-        List<String> authorities = rq.getSessionAttr("authorities");
-
-        if(!authorities.contains("ROLE_ADMIN")){
-            throw new RuntimeException("only admin use");
+        if (!rq.isLogined()){
+            throw new RuntimeException("please login");
         }
+
+
 
         return true;
     }
