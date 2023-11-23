@@ -3,14 +3,9 @@ package com.ll.sb231114.domain.article.article.service;
 import com.ll.sb231114.domain.article.article.entity.Article;
 import com.ll.sb231114.domain.article.article.repository.ArticleRepository;
 import com.ll.sb231114.domain.member.member.entity.Member;
-import com.ll.sb231114.global.rq.Rq;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +14,6 @@ import java.util.Optional;
 public class ArticleService {
 
     private final ArticleRepository articleRepository;
-
 
 
     public Article write(Member author, String title, String body) {
@@ -43,8 +37,8 @@ public class ArticleService {
         return articleRepository.findById(id);
     }
 
-    public void delete(long id) {
-        articleRepository.delete(id);
+    public void delete(Article article) {
+        articleRepository.delete(article);
     }
 
     public void modify(Article article, String title, String body) {
@@ -53,6 +47,12 @@ public class ArticleService {
     }
 
     public boolean canModify(Member actor, Article article) {
+        if(actor == null) return false;
+        return article.getAuthor().equals(actor);
+    }
+
+    public boolean canDelete(Member actor, Article article) {
+        if(actor == null) return false;
         return article.getAuthor().equals(actor);
     }
 }

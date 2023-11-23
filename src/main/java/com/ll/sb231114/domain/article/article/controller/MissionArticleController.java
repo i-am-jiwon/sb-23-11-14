@@ -5,7 +5,6 @@ import com.ll.sb231114.domain.article.article.service.ArticleService;
 import com.ll.sb231114.domain.member.member.entity.Member;
 import com.ll.sb231114.domain.member.member.service.MemberService;
 import com.ll.sb231114.global.rq.Rq;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -44,8 +43,14 @@ public class MissionArticleController {
 
     @GetMapping("/article/delete/{id}")
     String write(@PathVariable long id) {
+        Article article = articleService.findById(id).get();
 
-        articleService.delete(id);
+        if (article == null) throw new RuntimeException("no article");
+        if (!articleService.canDelete(rq.getMember(), article)) {
+            throw new RuntimeException("no authorities");
+        }
+
+        articleService.delete(article);
 
         return rq.redirect("/article/list", "%d번 게시물이 삭제되었습니다.".formatted(id));
 
@@ -59,7 +64,7 @@ public class MissionArticleController {
         Article article = articleService.findById(id).get();
 
         if (article == null) throw new RuntimeException("no article");
-        if ( !articleService.canModify(rq.getMember(), article)) {
+        if (!articleService.canModify(rq.getMember(), article)) {
             throw new RuntimeException("no authorities");
         }
 
@@ -82,7 +87,7 @@ public class MissionArticleController {
         Article article = articleService.findById(id).get();
 
         if (article == null) throw new RuntimeException("no article");
-        if ( !articleService.canModify(rq.getMember(), article)) {
+        if (!articleService.canModify(rq.getMember(), article)) {
             throw new RuntimeException("no authorities");
         }
 
