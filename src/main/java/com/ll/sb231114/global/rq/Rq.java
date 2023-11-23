@@ -60,4 +60,8 @@ public class Rq {
     public void removeSessionAttr(String name) {
         req.getSession().removeAttribute(name);
     }
+
+    public boolean isAdmin() {
+        return getMember().isAdmin();
+    }
 }

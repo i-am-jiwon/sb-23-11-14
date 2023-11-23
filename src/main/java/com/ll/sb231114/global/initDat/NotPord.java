@@ -6,7 +6,9 @@ import com.ll.sb231114.domain.member.member.service.MemberService;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
+@Profile("!prod")
 @Configuration
 public class NotPord {
     @Bean
