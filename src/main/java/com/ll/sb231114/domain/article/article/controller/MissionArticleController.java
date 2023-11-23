@@ -31,7 +31,6 @@ public class MissionArticleController {
     private final Rq rq;
 
 
-
     @GetMapping("/article/detail/{id}")
     String showDetail(Model model, @PathVariable long id) {
 
@@ -57,8 +56,12 @@ public class MissionArticleController {
     @GetMapping("/article/modify/{id}")
     String modify(Model model, @PathVariable long id) {
 
-
         Article article = articleService.findById(id).get();
+
+        if (article == null) throw new RuntimeException("no article");
+        if ( !articleService.canModify(rq.getMember(), article)) {
+            throw new RuntimeException("no authorities");
+        }
 
         model.addAttribute("article", article);
 
@@ -76,7 +79,14 @@ public class MissionArticleController {
     @PostMapping("/article/modify/{id}")
     String modify(@PathVariable long id, @Valid ModifyForm ModifyForm) {
 
-        articleService.modify(id, ModifyForm.title, ModifyForm.body);
+        Article article = articleService.findById(id).get();
+
+        if (article == null) throw new RuntimeException("no article");
+        if ( !articleService.canModify(rq.getMember(), article)) {
+            throw new RuntimeException("no authorities");
+        }
+
+        articleService.modify(article, ModifyForm.title, ModifyForm.body);
 
 
         return rq.redirect("/article/list", "%d번 게시물이 수정되었습니다.".formatted(id));
