@@ -5,8 +5,7 @@ import com.ll.sb231114.domain.article.article.service.ArticleService;
 import com.ll.sb231114.domain.member.member.entity.Member;
 import com.ll.sb231114.domain.member.member.service.MemberService;
 import com.ll.sb231114.global.rq.Rq;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
+
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -19,11 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.nio.file.AccessDeniedException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.OptionalLong;
 
 @Controller
 @RequiredArgsConstructor
@@ -50,8 +45,6 @@ public class MissionArticleController {
 
     @GetMapping("/article/delete/{id}")
     String write(@PathVariable long id) {
-        if(!rq.isLogined()) throw new RuntimeException("로그인해주세요");
-
 
         articleService.delete(id);
 
@@ -64,7 +57,6 @@ public class MissionArticleController {
     @GetMapping("/article/modify/{id}")
     String modify(Model model, @PathVariable long id) {
 
-        if(!rq.isLogined()) throw new RuntimeException("로그인해주세요");
 
         Article article = articleService.findById(id).get();
 
@@ -84,9 +76,6 @@ public class MissionArticleController {
     @PostMapping("/article/modify/{id}")
     String modify(@PathVariable long id, @Valid ModifyForm ModifyForm) {
 
-        if(!rq.isLogined()) throw new RuntimeException("로그인해주세요");
-
-
         articleService.modify(id, ModifyForm.title, ModifyForm.body);
 
 
@@ -96,7 +85,6 @@ public class MissionArticleController {
 
     @GetMapping("/article/write")
     String write() {
-        if(!rq.isLogined()) throw new RuntimeException("로그인해주세요");
 
         return "article/write";
     }
@@ -112,8 +100,6 @@ public class MissionArticleController {
     @PostMapping("/article/write")
     @SneakyThrows
     String write(@Valid WriteForm writeForm) {
-        if(!rq.isLogined()) throw new RuntimeException("로그인해주세요");
-
 
         Member loginedMember = rq.getMember();
         Article article = articleService.write(rq.getMember(), writeForm.title, writeForm.body);
