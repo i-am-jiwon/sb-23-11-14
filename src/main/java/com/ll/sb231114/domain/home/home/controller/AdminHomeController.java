@@ -12,17 +12,13 @@ public class AdminHomeController {
 
     @GetMapping("/adm")
     public String showMain(){
-        if (!rq.isAdmin()){
-            throw new RuntimeException("no");
-        }
+
         return "home/home/adm/main";
     }
 
     @GetMapping("/adm/home/about")
     public String showAbout(){
-        if (!rq.isAdmin()){
-            throw new RuntimeException("no");
-        }
+
         return "home/home/adm/main";
     }
 }
