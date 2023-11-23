@@ -11,12 +11,7 @@ import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
 public class MemberRepository {
-    private final List<Member> members = new ArrayList<>(){{
-        add(new Member(1L, "user 1", "pass 1"));
-        add(new Member(2L, "user 2", "pass 2"));
-        add(new Member(3L, "user 3", "pass 3"));
-
-    }};
+    private final List<Member> members = new ArrayList<>(){};
 
     public Member save(Member member) {
         if(member.getId() == null){
