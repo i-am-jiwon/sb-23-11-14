@@ -53,7 +53,7 @@ public class Rq {
         return getMemberId() > 0;
     }
 
-    public void setSessionAttr(String name, long value) {
+    public void setSessionAttr(String name, Object value) {
         req.getSession().setAttribute(name, value);
     }
 
