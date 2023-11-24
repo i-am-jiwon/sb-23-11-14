@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,15 +28,6 @@ public class MemberController {
     @GetMapping("/member/login")
     String showLogin() {
         return "member/login";
-    }
-
-
-    @GetMapping("/member/logout")
-    String logout() {
-        rq.removeSessionAttr("loginedMemberId");
-
-        return rq.redirect("/article/list", "로그아웃");
-
     }
 
 
