@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -24,13 +25,13 @@ public class MemberController {
     private final MemberService memberService;
     private final Rq rq;
 
-
+    @PreAuthorize("isAnonymous()")
     @GetMapping("/member/login")
     String showLogin() {
         return "member/login";
     }
 
-
+    @PreAuthorize("isAnonymous()")
     @GetMapping("/member/join")
     String join() {
         return "member/join";
@@ -43,7 +44,7 @@ public class MemberController {
         @NotBlank
         private String password;
     }
-
+    @PreAuthorize("isAnonymous()")
     @PostMapping("/member/join")
     String join(@Valid JoinForm joinForm) {
 

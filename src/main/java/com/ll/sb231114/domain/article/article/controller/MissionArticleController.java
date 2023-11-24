@@ -10,6 +10,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -30,6 +31,7 @@ public class MissionArticleController {
     private final Rq rq;
 
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/article/detail/{id}")
     String showDetail(Model model, @PathVariable long id) {
 
@@ -79,6 +81,7 @@ public class MissionArticleController {
         private String body;
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/article/modify/{id}")
     String modify(@PathVariable long id, @Valid ModifyForm ModifyForm) {
 
@@ -96,6 +99,7 @@ public class MissionArticleController {
 
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/article/write")
     String write() {
 
@@ -110,6 +114,7 @@ public class MissionArticleController {
         private String body;
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/article/write")
     @SneakyThrows
     String write(@Valid WriteForm writeForm) {
