@@ -45,7 +45,6 @@ public class MissionArticleController {
     String write(@PathVariable long id) {
         Article article = articleService.findById(id).get();
 
-        if (article == null) throw new RuntimeException("no article");
         if (!articleService.canDelete(rq.getMember(), article)) {
             throw new RuntimeException("no authorities");
         }
@@ -63,7 +62,6 @@ public class MissionArticleController {
 
         Article article = articleService.findById(id).get();
 
-        if (article == null) throw new RuntimeException("no article");
         if (!articleService.canModify(rq.getMember(), article)) {
             throw new RuntimeException("no authorities");
         }
