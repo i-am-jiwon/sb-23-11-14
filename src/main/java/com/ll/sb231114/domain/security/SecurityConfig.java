@@ -10,11 +10,17 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http
-                .csrf(
-                        csrf -> csrf
-                                .disable()
-                );
-        return http.build();
+        return http
+
+                .formLogin(
+                        formLogin -> formLogin
+                                .loginPage("/member/login")
+                                .loginProcessingUrl("/member/login")
+                                .usernameParameter("username")
+                                .usernameParameter("password")
+                                .defaultSuccessUrl("/article/list")
+                                .permitAll()
+                        )
+                .build();
     }
 }
