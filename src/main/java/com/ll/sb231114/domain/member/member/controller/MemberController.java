@@ -3,18 +3,16 @@ package com.ll.sb231114.domain.member.member.controller;
 import com.ll.sb231114.domain.member.member.entity.Member;
 import com.ll.sb231114.domain.member.member.service.MemberService;
 import com.ll.sb231114.global.rq.Rq;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
@@ -44,6 +42,7 @@ public class MemberController {
         @NotBlank
         private String password;
     }
+
     @PreAuthorize("isAnonymous()")
     @PostMapping("/member/join")
     String join(@Valid JoinForm joinForm) {
@@ -54,7 +53,11 @@ public class MemberController {
 
     }
 
-
+    @GetMapping("/member/test1")
+    @ResponseBody
+    Member showTest1() {
+        return rq.getMember();
+    }
 }
 
 
