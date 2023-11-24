@@ -17,9 +17,8 @@ public class NeedToAdminInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
-        List<String> authorities = rq.getSessionAttr("authorities");
 
-        if(!authorities.contains("ROLE_ADMIN")){
+        if(!rq.isAdmin()){
             throw new RuntimeException("only admin use");
         }
 
