@@ -80,12 +80,11 @@ public class MissionArticleController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/modify/{id}")
+    @PutMapping("/modify/{id}")
     String modify(@PathVariable long id, @Valid ModifyForm ModifyForm) {
 
         Article article = articleService.findById(id).get();
 
-        if (article == null) throw new RuntimeException("no article");
         if (!articleService.canModify(rq.getMember(), article)) {
             throw new RuntimeException("no authorities");
         }
