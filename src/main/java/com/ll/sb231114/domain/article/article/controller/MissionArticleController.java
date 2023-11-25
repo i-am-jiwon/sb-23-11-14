@@ -17,12 +17,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 @Validated
+@RequestMapping("/article")
 public class MissionArticleController {
 
 
@@ -32,7 +34,7 @@ public class MissionArticleController {
 
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/article/detail/{id}")
+    @GetMapping("/detail/{id}")
     String showDetail(Model model, @PathVariable long id) {
 
         Article article = articleService.findById(id).get();
@@ -43,7 +45,7 @@ public class MissionArticleController {
     }
 
 
-    @GetMapping("/article/delete/{id}")
+    @GetMapping("/delete/{id}")
     String write(@PathVariable long id) {
         Article article = articleService.findById(id).get();
 
@@ -59,7 +61,7 @@ public class MissionArticleController {
     }
 
 
-    @GetMapping("/article/modify/{id}")
+    @GetMapping("/modify/{id}")
     String modify(Model model, @PathVariable long id) {
 
         Article article = articleService.findById(id).get();
@@ -82,7 +84,7 @@ public class MissionArticleController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/article/modify/{id}")
+    @PostMapping("/modify/{id}")
     String modify(@PathVariable long id, @Valid ModifyForm ModifyForm) {
 
         Article article = articleService.findById(id).get();
@@ -100,7 +102,7 @@ public class MissionArticleController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/article/write")
+    @GetMapping("/write")
     String write() {
 
         return "article/write";
@@ -115,7 +117,7 @@ public class MissionArticleController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/article/write")
+    @PostMapping("/write")
     @SneakyThrows
     String write(@Valid WriteForm writeForm) {
 
@@ -126,7 +128,7 @@ public class MissionArticleController {
 
     }
 
-    @GetMapping("/article/list")
+    @GetMapping("/list")
     String showList(Model model) {
 
         Member loginedMember = memberService.findById(1L).get();
