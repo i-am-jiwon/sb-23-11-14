@@ -44,8 +44,8 @@ public class MissionArticleController {
         return "article/detail";
     }
 
-
-    @GetMapping("/delete/{id}")
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/delete/{id}")
     String write(@PathVariable long id) {
         Article article = articleService.findById(id).get();
 
