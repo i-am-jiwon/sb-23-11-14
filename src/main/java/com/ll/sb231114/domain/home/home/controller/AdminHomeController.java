@@ -21,6 +21,6 @@ public class AdminHomeController {
     @GetMapping("/home/about")
     public String showAbout(){
 
-        return "home/home/adm/main";
+        return "home/home/adm/about";
     }
 }
