@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
@@ -44,14 +45,6 @@ public class MemberController {
     String join(@Valid JoinForm joinForm) {
         RsData<Member> joinRs = memberService.join(joinForm.username, joinForm.password);
 
-        if (joinRs.isFail()) {
-            return rq.historyBack(joinRs.getMsg());
-        }
-
-        return rq.redirect("/member/login", joinRs.getMsg());
+        return rq.redirect("/member/login", joinRs);
     }
 }
-
-
-
-
