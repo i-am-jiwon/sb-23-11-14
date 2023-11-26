@@ -44,7 +44,6 @@ public class MemberController {
     @PostMapping("/member/join")
     String join(@Valid JoinForm joinForm) {
         RsData<Member> joinRs = memberService.join(joinForm.username, joinForm.password);
-
-        return rq.redirect("/member/login", joinRs);
+        return rq.redirectOrBack("/member/login", joinRs);
     }
 }
