@@ -56,4 +56,8 @@ public class ArticleService {
         if(actor.isAdmin()) return true;
         return article.getAuthor().equals(actor);
     }
+
+    public Optional<Article> findLatest() {
+        return articleRepository.findLatest();
+    }
 }

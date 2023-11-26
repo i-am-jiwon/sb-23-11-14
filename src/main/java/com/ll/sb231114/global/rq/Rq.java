@@ -42,11 +42,17 @@ public class Rq {
             this.user = (User) authentication.getPrincipal();
         }
     }
-
     public String redirect(String path, String msg) {
+        if (msg == null)
+            return "redirect:" + path;
+
+        boolean containsTtl = msg.contains(";ttl=");
+
+        if (containsTtl) {
+            msg = msg.split(";ttl=", 2)[0];
+        }
         msg = URLEncoder.encode(msg, StandardCharsets.UTF_8);
         msg += ";ttl=" + (new Date().getTime() + 1000 * 5);
-
         return "redirect:" + path + "?msg=" + msg;
     }
 
@@ -89,5 +95,10 @@ public class Rq {
 
         return user.getAuthorities()
                 .stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+    }
+    public String historyBack(String msg) {
+        req.setAttribute("msg", msg);
+
+        return "global/js";
     }
 }

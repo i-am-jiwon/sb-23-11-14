@@ -3,36 +3,32 @@ package com.ll.sb231114.domain.member.member.controller;
 import com.ll.sb231114.domain.member.member.entity.Member;
 import com.ll.sb231114.domain.member.member.service.MemberService;
 import com.ll.sb231114.global.rq.Rq;
+import com.ll.sb231114.global.rsData.RsData;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
-@Validated
 public class MemberController {
-
-
     private final MemberService memberService;
     private final Rq rq;
 
     @PreAuthorize("isAnonymous()")
     @GetMapping("/member/login")
     String showLogin() {
-        return "member/login";
+        return "member/member/login";
     }
 
     @PreAuthorize("isAnonymous()")
     @GetMapping("/member/join")
-    String join() {
-        return "member/join";
+    String showJoin() {
+        return "member/member/join";
     }
 
     @Data
@@ -46,17 +42,13 @@ public class MemberController {
     @PreAuthorize("isAnonymous()")
     @PostMapping("/member/join")
     String join(@Valid JoinForm joinForm) {
+        RsData<Member> joinRs = memberService.join(joinForm.username, joinForm.password);
 
-        memberService.join(joinForm.username, joinForm.password);
+        if (joinRs.isFail()) {
+            return rq.historyBack(joinRs.getMsg());
+        }
 
-        return rq.redirect("/member/login", "가입완료");
-
-    }
-
-    @GetMapping("/member/test1")
-    @ResponseBody
-    Member showTest1() {
-        return rq.getMember();
+        return rq.redirect("/member/login", joinRs.getMsg());
     }
 }
 

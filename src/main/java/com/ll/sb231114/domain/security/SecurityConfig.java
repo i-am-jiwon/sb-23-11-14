@@ -9,7 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableMethodSecurity
 public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -24,18 +23,17 @@ public class SecurityConfig {
                 .formLogin(
                         formLogin -> formLogin
                                 .loginPage("/member/login")
-                                .defaultSuccessUrl("/article/list")
+                                .defaultSuccessUrl("/")
                 )
                 .logout(
                         logout -> logout
                                 .logoutUrl("/member/logout")
-                                .logoutSuccessUrl("/article/list")
+                                .logoutSuccessUrl("/")
                 )
                 .build();
     }
-
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
