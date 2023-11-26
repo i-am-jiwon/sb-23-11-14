@@ -3,10 +3,14 @@ server:
 spring:
   thymeleaf:
     cache: false
-  security:
-    user:
-      name: user
-      password: 1234
+  h2:
+    console:
+      path: /h2-console
+  datasource:
+    url: jdbc:h2:mem:sb_dev;MODE=MySQL
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
   mvc:
     hiddenmethod:
       filter:
