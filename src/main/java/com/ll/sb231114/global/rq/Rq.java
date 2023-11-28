@@ -3,6 +3,7 @@ package com.ll.sb231114.global.rq;
 import com.ll.sb231114.domain.member.member.entity.Member;
 import com.ll.sb231114.domain.member.member.service.MemberService;
 import com.ll.sb231114.global.rsData.RsData;
+import com.ll.sb231114.standard.util.Ut;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -110,6 +111,12 @@ public class Rq {
         req.setAttribute("msg", msg);
 
         return "global/js";
+    }
+
+    public String historyBack(Exception ex){
+        String exStr = Ut.exception.toString(ex);
+        req.setAttribute("exStr", exStr);
+        return historyBack(ex.getMessage());
     }
 
     public String redirectOrBack(String url, RsData<?> rs) {
