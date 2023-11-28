@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-@Profile("prod")
 @ControllerAdvice(annotations = Controller.class)
 @RequiredArgsConstructor
 public class ControllerExceptionHandler {
