@@ -3,6 +3,7 @@ package com.ll.sb231114.domain.article.article.controller;
 
 import com.ll.sb231114.domain.article.article.entity.Article;
 import com.ll.sb231114.domain.article.article.service.ArticleService;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@Transactional
 public class ArticleControllerTest {
     @Autowired
     private MockMvc mvc;
