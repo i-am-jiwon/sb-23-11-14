@@ -6,21 +6,28 @@ import com.ll.sb231114.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     public RsData<Member> join(String username, String password) {
         if (findByUsername(username).isPresent()) {
             return new RsData<>("F-1", "이미 사용중인 아이디입니다.");
         }
 
         password = passwordEncoder.encode(password);
-        Member member = new Member(username, password);
+        Member member = Member.builder()
+                .username(username)
+                .password(password)
+                .build();
 
         memberRepository.save(member);
 
@@ -40,15 +47,18 @@ public class MemberService {
     public Optional<Member> findByUsername(String username) {
         return memberRepository.findByUsername(username);
     }
+
+    @Transactional
     public void delete(long id) {
-        memberRepository.delete(id);
+        memberRepository.deleteById(id);
     }
+    @Transactional
     public void modify(long id, String username, String password) {
         Member member = findById(id).get();
         member.setUsername(username);
         member.setPassword(password);
     }
     public Optional<Member> findLatest() {
-        return memberRepository.findLatest();
+        return memberRepository.findFirstByOrderByIdDesc();
     }
 }

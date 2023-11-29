@@ -1,54 +1,14 @@
 package com.ll.sb231114.domain.member.member.repository;
 
 import com.ll.sb231114.domain.member.member.entity.Member;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
-@Repository
-@RequiredArgsConstructor
-public class MemberRepository {
-    private final List<Member> members = new ArrayList<>(){};
 
-    public Member save(Member member) {
-        if(member.getId() == null){
-            member.setId(members.size() + 1L);
-        }
-        members.add(member);
+public interface MemberRepository extends JpaRepository<Member, Long> {
 
-        return member;
-    }
+    Optional<Member> findByUsername(String username);
 
-    public Member findLastMember() {
-        return members.getLast();
-    }
-
-    public List<Member> findAll() {
-        return members;
-    }
-
-    public Optional<Member> findById(long id) {
-        return members.stream()
-                .filter(member -> member.getId() == id)
-                .findFirst();
-    }
-
-    public void delete(long id) {
-        members.removeIf(member -> member.getId() == id);
-    }
-
-    public Optional<Member> findByUsername(String username) {
-        return members.stream()
-                .filter(member -> member.getUsername().equals(username))
-                .findFirst();
-    }
-
-    public Optional<Member> findLatest() {
-        return Optional.ofNullable(
-                members.isEmpty() ? null : members.getLast()
-        );
-    }
+    Optional<Member> findFirstByOrderByIdDesc();
 }
