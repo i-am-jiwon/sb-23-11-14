@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class NotProd {
     @Bean
+
     public ApplicationRunner initNotProd(
             SystemService systemService,
             MemberService memberService,
